@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:layout="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="403dp"
+            android:layout_height="65dp"
+            android:layout_weight="1"
+            android:background="#3F51B5"
+            android:text="SUBMIT"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="451dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#A10826"
+            android:text="CANCEL"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Nameproduct"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:text="Name  "
+            android:textColor="@android:color/black"
+            android:textSize="30sp">
+
+        </TextView>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview"
+            android:textColor="@android:color/background_dark"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:inputType="text"
+            android:ems="10">
+
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/quantityproduct"
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Quantity"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp">
+
+        </TextView>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:id="@+id/textview1"
+            android:inputType="number"
+            android:textColor="@android:color/background_dark"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"            android:ems="10">
+
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/expirationdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Expiration Date  "
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"            android:textColor="@android:color/background_dark"
+            android:textSize="30sp"></TextView>
+
+    <EditText
+        android:id="@+id/textview3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ems="8"
+        android:textColor="@android:color/background_dark"
+        android:inputType="date">
+
+    </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/opendate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Date Opened  "
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"            android:textColor="@android:color/background_dark"
+            android:textSize="30sp"></TextView>
+
+        <EditText
+            android:id="@+id/textview4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ems="8"
+            android:textColor="@android:color/background_dark"
+            android:inputType="date">
+
+        </EditText>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/txtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Category"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp"></TextView>
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorPrimary"
+            android:entries="@array/categoryitems">
+
+        </Spinner>
+        <TextView
+            android:id="@+id/spinneresult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp"></TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/notif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Notifications "
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp"
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/expiry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Days before expiration "
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp">
+
+        </TextView>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:id="@+id/textview5"
+            android:inputType="number"
+            android:textColor="@android:color/background_dark"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"            android:ems="10">
+
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/openy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Days after opening "
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp">
+
+        </TextView>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview6"
+            android:inputType="number"
+            android:textColor="@android:color/background_dark"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:ems="10">
+
+        </EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Photo "
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/background_dark"
+            android:textSize="35sp"></TextView>
+
+        <Button
+            android:id="@+id/picturebutton"
+            android:layout_width="64dp"
+            android:layout_height="62dp"
+            android:background="#9C27B0"
+            android:foreground="@drawable/ic_baseline_photo_camera_24"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="113dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="117dp"
+            android:layout_height="96dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
+            android:scaleX="-1"
+            android:background="#9C27B0">
+
+        </ImageView>
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

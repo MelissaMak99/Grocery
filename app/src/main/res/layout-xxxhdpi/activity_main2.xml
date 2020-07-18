@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp"
+    tools:context=".ShoppingList"
+    android:background="@color/ic_launcher_background">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:padding="10dp"
+        android:text="Shopping List"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="26dp" />
+    <EditText
+        android:layout_below="@id/textView"
+        android:id="@+id/editText"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Add an Item"
+        android:textColorHint="#171717"
+        android:textColor="#101010"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1"
+        android:orientation="horizontal"
+        android:layout_below="@id/editText"
+        android:padding="10dp">
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:background="#9C27B0"/>
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:background="#9C27B0"
+            android:layout_marginLeft="70dp"/>
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:background="#9C27B0"
+            android:layout_marginLeft="60dp"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_below="@id/linearLayout1"
+        android:text="My Shopping List"
+        android:textSize="20dp"
+        android:textColor="@android:color/background_dark"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView1"
+        android:background="#676767"
+        android:cacheColorHint="#131313"
+        android:choiceMode="multipleChoice"
+        android:textColor="@android:color/background_dark" />
+
+
+
+
+</RelativeLayout>

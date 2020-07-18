@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group>
+        <item
+            android:id="@+id/nav_addproduct"
+            android:icon="@drawable/ic_addproduct"
+            android:title="Add Product" />
+
+        <item
+            android:id="@+id/nav_shop"
+            android:icon="@drawable/ic_shopping"
+            android:title="Shopping List" />
+    </group>
+
+</menu>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Grocery Inventory</string>
+    <string-array name="categoryitems">
+        <item>Baking Goods</item>
+        <item>Cans</item>
+        <item>Diary</item>
+        <item>Drinks</item>
+        <item>Fruits and Vegetables</item>
+        <item>Meats and Seafoods</item>
+        <item>Oils</item>
+        <item>Sauces</item>
+        <item>Snacks</item>
+        <item>Spices</item>
+    </string-array>
+</resources>
