@@ -5,10 +5,7 @@ import androidx.lifecycle.ViewModel
 
 
 class ShoppingListViewModel : ViewModel(){
-    private  val itemsLiveData: MutableLiveData<MutableList<String>>
+    private  val itemsLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
 
-    init {
-        itemsLiveData = MutableLiveData()
-    }
 }
 
