@@ -3,6 +3,7 @@ package com.example.navigation
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.cardview.view.*
 
 
 class MyListAdapter(private val Exampleproduct: List<Proditems>): RecyclerView.Adapter<MyListAdapter.MyListviewHolder>(){
-    //var clicked = "false"
+    var clicked = "false"
     var lists = mutableListOf<Proditems>()
 
     init {
@@ -40,20 +41,27 @@ class MyListAdapter(private val Exampleproduct: List<Proditems>): RecyclerView.A
 
     override fun onBindViewHolder(holder: MyListviewHolder, position: Int) {
         val currentItem = lists[position]
-            holder.imageView.setImageBitmap(currentItem.image)
-            holder.textview1.text = currentItem.name
-            holder.textview2.text = currentItem.quantity
-            holder.itemView.setOnClickListener(View.OnClickListener
-            { view ->
-                var clicked = "true"
-                //val position = lists.get(holder.adapterPosition)
-                var pose = position
-                val context: Context = view.context
-                val intent1 = Intent(context,ProductActivity::class.java)
-                intent1.putExtra("position",pose)
-                intent1.putExtra("itemcheck",clicked)
-                context.startActivity(intent1)
-            })
+        //holder.imageView.setImageBitmap(currentItem.image)
+        if (currentItem.image == "null"){
+            holder.imageView.setImageResource(R.drawable.ic_fastfood)
+        }
+        else {
+            val image: Uri = Uri.parse(currentItem.image)
+            holder.imageView.setImageURI(image)
+        }
+        holder.textview1.text = currentItem.name
+        holder.textview2.text = currentItem.quantity
+        holder.itemView.setOnClickListener(View.OnClickListener
+        { view ->
+            var clicked = "true"
+            //val position = lists.get(holder.adapterPosition)
+            var pose = position
+            val context: Context = view.context
+            val intent1 = Intent(context,ProductActivity::class.java)
+            intent1.putExtra("position",pose)
+            intent1.putExtra("itemcheck",clicked)
+            context.startActivity(intent1)
+        })
 
     }
 

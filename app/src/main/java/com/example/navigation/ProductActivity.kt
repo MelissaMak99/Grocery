@@ -3,10 +3,12 @@ package com.example.navigation
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -18,6 +20,10 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_product2.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -71,15 +77,31 @@ class ProductActivity : AppCompatActivity() {
 
             //val intent1 = Intent(applicationContext,MainActivity::class.java)
             val intent = Intent(this, MainActivity::class.java)
+            val sharedPreference = getSharedPreferences("PRODUCT_LIST", Context.MODE_PRIVATE)
+            /* val image = null
+              var editor = sharedPreference.edit()
+              editor.clear()
+              editor.putString("name", name)
+              editor.putString("quantity", quantity)
+              editor.putString("drawable", image)*/
+
+
+
+
+            if (ima1.drawable != null) {
+                val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+                intent.putExtra("photo", bitmap)
+                //val drawable = bitmap?.let { saveImageToInternalStorage(it) }
+                //editor.putString("drawable", drawable.toString())
+            }
+            //editor.commit()
+
             intent.putExtra("name", name)
             intent.putExtra("popo", place)
             intent.putExtra("itemcheck", itemcheck)
             intent.putExtra("Quantity", quantity)
             //intent.putExtra("photo", ima1)
-            if (ima1.drawable != null) {
-                val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-                intent.putExtra("photo", bitmap)
-            }
+
 
             startActivity(intent)
             if (expidate.isNotEmpty()) {
@@ -147,33 +169,30 @@ class ProductActivity : AppCompatActivity() {
 
 
 
-            option = findViewById<Spinner>(R.id.spinner1)
-            result = findViewById<TextView>(R.id.spinneresult)
-            val options = arrayOf(
-                "Baking Goods",
-                "Cans",
-                "Diary",
-                "Drinks",
-                "Fruits and Vegetables",
-                "Meats and Seafoods",
-                "Oils",
-                "Sauces",
-                "Snacks",
-                "Spices"
-            )
-            option.adapter =
-                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options)
+        option = findViewById<Spinner>(R.id.spinner1)
+        result = findViewById<TextView>(R.id.spinneresult)
+        val options = arrayOf(
+            "Baking Goods",
+            "Cans",
+            "Diary",
+            "Drinks",
+            "Fruits and Vegetables",
+            "Meats and Seafoods",
+            "Oils",
+            "Sauces",
+            "Snacks",
+            "Spices"
+        )
+        option.adapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options)
 
-            option.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    result.text = "Select a category"
-                }
+        option.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                result.text = "Select a category"
+            }
 
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    result.text = options.get(p2)
-
-                }
-
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                result.text = options.get(p2)
 
             }
 
@@ -181,13 +200,16 @@ class ProductActivity : AppCompatActivity() {
         }
 
 
+    }
 
-        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            if (requestCode == 111 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                picturebutton.isEnabled = true
-            }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 111 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            picturebutton.isEnabled = true
         }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -196,7 +218,43 @@ class ProductActivity : AppCompatActivity() {
             imageView.setImageBitmap(pic)
         }
     }
+
+    private fun saveImageToInternalStorage(bitmap:Bitmap): Uri {
+        // Get the image from drawable resource as drawable object
+        //val drawable = ContextCompat.getDrawable(applicationContext,drawableId)
+
+        // Get the bitmap from drawable object
+        //val bitmap = (drawable as BitmapDrawable).bitmap
+
+        // Get the context wrapper instance
+        val wrapper = ContextWrapper(applicationContext)
+
+        // Initializing a new file
+        // The bellow line return a directory in internal storage
+        var file = wrapper.getDir("images", Context.MODE_PRIVATE)
+
+        // Create a file to save the image
+        file = File(file, "${UUID.randomUUID()}.jpg")
+        try {
+            // Get the file output stream
+            val stream: OutputStream = FileOutputStream(file)
+            // Compress bitmap
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            // Flush the stream
+            stream.flush()
+            // Close stream
+            stream.close()
+        } catch (e: IOException){ // Catch the exception
+            e.printStackTrace()
+        }
+        // Return the saved image uri
+        return Uri.parse(file.absolutePath)
     }
+
+
+
+
+}
 
 
 

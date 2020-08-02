@@ -1,8 +1,10 @@
 package com.example.navigation
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.Menu
@@ -16,7 +18,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.content_main.*
+import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -34,26 +39,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
-
-
-
         val test = intent.getStringExtra("name")
+
+        var saveitems = getProdbis()
+        displaylist += saveitems
+        saveitems.sortBy { it.name }
+        recyclerview.adapter = MyListAdapter(saveitems)
+        recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerview.setHasFixedSize(true)
 
 
         if (test != null) {
             val exampleList = createalist()
-
+            //displaylist.clear()
             displaylist += exampleList
+            var new = displaylist.distinctBy { it.name }
+            displaylist.clear()
+            displaylist += new
+            SaveProd(displaylist)
             displaylist.sortBy { it.name }
             recyclerview.adapter = MyListAdapter(displaylist)
             recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             recyclerview.setHasFixedSize(true)
         }
 
-        list1?.layoutManager?.onRestoreInstanceState(listState)
+
 
 
         val simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object :
@@ -75,9 +85,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 //Remove swiped item from list and notify the RecyclerView
                 val position = viewHolder.adapterPosition
                 displaylist.removeAt(position)
-                list.removeAt(position)
-                recyclerview.adapter!!.notifyDataSetChanged()
-            }
+                //list.removeAt(position)
+                // Saving Data
+                SaveProd(displaylist)
+                recyclerview.adapter = MyListAdapter(displaylist)
+                recyclerview.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+                recyclerview.setHasFixedSize(true)            }
         }
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(recyclerview)
@@ -108,18 +121,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val place= intent.getIntExtra("popo", 0)
         val sel = intent.getStringExtra("itemcheck")
 
-
-       var drawable = intent.getParcelableExtra("photo") as Bitmap?
-        if(drawable == null) {
-            //drawable = R.color.colorPrimary as Bitmap?
-            drawable = Bitmap.createBitmap(50, 50,Bitmap.Config.ARGB_8888)
-            drawable.eraseColor(Color.GREEN)
-
-        }
-        //val intent = intent
+        //var drawable = intent.getParcelableExtra("photo") as Bitmap?
+        var image: Bitmap? = intent.getParcelableExtra<Bitmap>("photo")
+        val drawi = image?.let { saveImageToInternalStorage(it) }
+        val drawable = drawi.toString()
+        val intent = intent
         val name = intent.getStringExtra("name")
         val quantity = intent.getStringExtra("Quantity")
         val prod = name.toString()
+        //val item = Proditems(drawable, prod, quantity + "x")
         val item = Proditems(drawable, prod, quantity + "x")
         if(sel == "true"){
             //list.add(place, item)
@@ -130,6 +140,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         return list
     }
+
+
 
 
     // create action when a button is pressed
@@ -189,5 +201,70 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return super.onCreateOptionsMenu(menu)
     }
 
+    // Saving Data
+    fun SaveProd(list: ArrayList<Proditems>){
+        // Saving Data
+        val sharedPreference =getSharedPreferences("ITEMS_LIST", Context.MODE_PRIVATE)
+        var editor = sharedPreference.edit()
+        val gson = Gson()
+        val json = gson.toJson(list)//converting list to Json
+        editor.clear()
+        editor.putString("LISTP", json)
+        editor.commit()
+    }
+
+    // Retrieving Data
+
+    fun getProdbis(): ArrayList<Proditems> {
+        val sharedPreference =  getSharedPreferences("ITEMS_LIST",Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreference.getString("LISTP", emptyList<Proditems>().toString())
+        val type = object : TypeToken<List<Proditems>>() {}.type//converting the json to list
+        return gson.fromJson(json, type)//returning the list
+    }
+
+    override fun onBackPressed() {
+        finishAffinity()
+        finish()
+    }
+
+    // Method to save an image to internal storage
+    private fun saveImageToInternalStorage(bitmap:Bitmap): Uri {
+        // Get the image from drawable resource as drawable object
+        //val drawable = ContextCompat.getDrawable(applicationContext,drawableId)
+
+        // Get the bitmap from drawable object
+        //val bitmap = (drawable as BitmapDrawable).bitmap
+
+        // Get the context wrapper instance
+        val wrapper = ContextWrapper(applicationContext)
+
+        // Initializing a new file
+        // The bellow line return a directory in internal storage
+        var file = wrapper.getDir("images", Context.MODE_PRIVATE)
+
+        // Create a file to save the image
+        file = File(file, "${UUID.randomUUID()}.jpg")
+        try {
+            // Get the file output stream
+            val stream: OutputStream = FileOutputStream(file)
+            // Compress bitmap
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            // Flush the stream
+            stream.flush()
+            // Close stream
+            stream.close()
+        } catch (e: IOException){ // Catch the exception
+            e.printStackTrace()
+        }
+        // Return the saved image uri
+        return Uri.parse(file.absolutePath)
+    }
+
+
 }
+
+
+
+
 

@@ -22,6 +22,12 @@ class ShoppingList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
+        val list = getList()
+        if(list != null){
+            itemlist = list
+        }
+
+
         var adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, itemlist)
 
 
@@ -90,6 +96,7 @@ class ShoppingList : AppCompatActivity() {
         var editor = sharedPreference.edit()
         val gson = Gson()
         val json = gson.toJson(itemlist)//converting list to Json
+        editor.clear()
         editor.putString("LIST", json)
         editor.commit()
         super.onPause()
